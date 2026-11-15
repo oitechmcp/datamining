@@ -1,0 +1,266 @@
+### Program 1
+Sales = ["1200", "1500", "1800", "2100", "2500"]
+transformed_sales = [int(x) for x in Sales]
+print("Transformed Data:", transformed_sales)
+
+
+### Program 2
+import statistics as st
+
+marks = [65, 72, 80, 72, 90, 68, 75]
+print("Mean:", st.mean(marks))
+print("Median:", st.median(marks))
+print("Mode:", st.mode(marks))
+
+
+### Program 3
+import statistics
+
+hours = [2, 3, 4, 5, 6, 7]
+marks = [40, 50, 60, 70, 80, 90]
+print("Pearson Correlation:", statistics.correlation(hours, marks))
+
+
+### Program 4
+import math
+
+a = [25, 45000]
+b = [30, 52000]
+print("Euclidean Distance:", math.dist(a, b))
+
+
+### Program 5
+from sklearn.neighbors import KNeighborsClassifier
+
+X = [[20], [25], [35], [45], [55], [65]]
+y = ["Low", "Low", "Medium", "Medium", "High", "High"]
+
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X, y)
+print("Predicted Class:", knn.predict([[40]])[0])
+
+
+### Program 6
+import numpy as np
+
+data = [12, 14, 15, 16, 17, 18, 19, 22, 95]
+q1, q3 = np.percentile(data, [25, 75])
+iqr = q3 - q1
+lower, upper = q1 - 1.5 * iqr, q3 + 1.5 * iqr
+outliers = [x for x in data if x < lower or x > upper]
+print("Outliers:", outliers)
+
+
+### Program 7
+txns = [
+    ["Milk", "Bread"],
+    ["Milk", "Eggs"],
+    ["Milk", "Bread", "Butter"],
+    ["Bread", "Butter"],
+    ["Milk", "Bread"]
+]
+itemset = {"Milk", "Bread"}
+count = sum(1 for t in txns if itemset.issubset(t))
+print("Support:", count / len(txns))
+
+
+### Program 8
+txns = [
+    ["Milk", "Bread"],
+    ["Milk", "Bread", "Butter"],
+    ["Milk"],
+    ["Bread"],
+    ["Milk", "Bread"]
+]
+
+milk_count = sum(1 for t in txns if "Milk" in t)
+both_count = sum(1 for t in txns if "Milk" in t and "Bread" in t)
+print("Confidence:", both_count / milk_count)
+
+
+### Program 9
+a = [25, 45000]
+b = [30, 52000]
+print("Manhattan Distance:", sum(abs(x - y) for x, y in zip(a, b)))
+
+
+### Program 10
+import numpy as np
+
+v1 = np.array([1, 2, 3])
+v2 = np.array([4, 5, 6])
+cos_sim = np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+print("Cosine Similarity:", cos_sim)
+
+
+### Program 11
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({
+    'Name': ['Anil', 'Bharath', 'Charan', 'Deepa', 'Farah'],
+    'Age': [24, 26, 25, 28, 27],
+    'Salary': [35000, 42000, np.nan, 50000, 48000]
+})
+
+df_selected = df[['Age', 'Salary']].copy()
+df_selected['Salary'] = df_selected['Salary'].fillna(df_selected['Salary'].mean())
+df_transformed = (df_selected - df_selected.min()) / (df_selected.max() - df_selected.min())
+
+print("Final Dataset:\n", df_transformed)
+
+
+### Program 12
+from sklearn.linear_model import LinearRegression
+
+X = [[1200], [1500], [1800], [2100], [2400]]
+y = [48, 60, 72, 84, 96]
+
+model = LinearRegression()
+model.fit(X, y)
+print("Predicted Price for 2000 sq.ft:", model.predict([[2000]])[0])
+
+
+### Program 13
+from sklearn.naive_bayes import GaussianNB
+
+X = [[2], [3], [4], [5], [6], [7]]
+y = ["Fail", "Fail", "Pass", "Pass", "Pass", "Pass"]
+
+model = GaussianNB()
+model.fit(X, y)
+print("Prediction for 4.5 hours:", model.predict([[4.5]])[0])
+print("Accuracy:", model.score(X, y))
+
+
+### Program 14
+from sklearn.tree import DecisionTreeClassifier, export_text
+
+X = [[25000, 22], [30000, 25], [35000, 30], [50000, 35], [60000, 40], [70000, 45]]
+y = ["Reject", "Reject", "Reject", "Approve", "Approve", "Approve"]
+
+clf = DecisionTreeClassifier()
+clf.fit(X, y)
+print(export_text(clf, feature_names=["Income", "Age"]))
+
+
+### Program 15
+from sklearn.cluster import KMeans
+import numpy as np
+
+X = np.array([[22, 20], [25, 25], [28, 30], [40, 70], [42, 75], [45, 80]])
+kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
+print("Clusters:", kmeans.labels_)
+
+
+### Program 16
+from sklearn.cluster import AgglomerativeClustering
+
+X = [[22, 20], [25, 25], [28, 30], [40, 70], [42, 75], [45, 80]]
+model = AgglomerativeClustering(n_clusters=2)
+labels = model.fit_predict(X)
+print("Clusters formed:", labels)
+
+
+### Program 17
+from sklearn.cluster import BisectingKMeans
+
+X = [[22, 20], [25, 25], [28, 30], [40, 70], [42, 75], [45, 80]]
+model = BisectingKMeans(n_clusters=2, random_state=0).fit(X)
+print("Divisive Clusters:", model.labels_)
+
+
+### Program 18
+from itertools import combinations
+
+txns = [
+    ["Milk", "Bread", "Eggs"],
+    ["Milk", "Bread"],
+    ["Milk", "Eggs"],
+    ["Bread", "Butter"],
+    ["Milk", "Bread", "Butter"]
+]
+min_support = 2
+items = sorted(list(set(item for t in txns for item in t)))
+
+frequent = []
+for k in range(1, len(items) + 1):
+    itemsets = list(combinations(items, k))
+    current = [itemset for itemset in itemsets if sum(1 for t in txns if set(itemset).issubset(t)) >= min_support]
+    if not current:
+        break
+    frequent.extend(current)
+
+print("Frequent Itemsets:", frequent)
+
+
+### Program 19
+import multiprocessing as mp
+
+def process_part(arr):
+    return sum(x * x for x in arr)
+
+if __name__ == '__main__':
+    data = list(range(1, 101))
+    mid = len(data) // 2
+    part1, part2 = data[:mid], data[mid:]
+    
+    with mp.Pool(2) as pool:
+        res1, res2 = pool.map(process_part, [part1, part2])
+        
+    print("Part 1 Result:", res1)
+    print("Part 2 Result:", res2)
+
+
+### Program 20
+import time
+import multiprocessing as mp
+
+def sum_part(arr):
+    return sum(arr)
+
+if __name__ == '__main__':
+    numbers = list(range(10_000_000))
+    
+    t0 = time.time()
+    seq_sum = sum(numbers)
+    seq_time = time.time() - t0
+    
+    mid = len(numbers) // 2
+    t0 = time.time()
+    with mp.Pool(2) as pool:
+        par_sum = sum(pool.map(sum_part, [numbers[:mid], numbers[mid:]]))
+    par_time = time.time() - t0
+    
+    print(f"Sequential Time: {seq_time:.4f}s")
+    print(f"Parallel Time:   {par_time:.4f}s")
+
+
+### README
+# Data Mining Programs
+
+## Section-A
+- **1.py**: ETL process on sales data.
+- **2.py**: Calculate mean, median, and mode.
+- **3.py**: Calculate Pearson correlation coefficient.
+- **4.py**: Calculate Euclidean distance.
+- **5.py**: Classify customer using KNN algorithm.
+- **6.py**: Identify outliers using IQR method.
+- **7.py**: Calculate support value of an itemset.
+- **8.py**: Calculate confidence of an association rule.
+- **9.py**: Calculate Manhattan distance.
+- **10.py**: Calculate Cosine similarity.
+
+## Section-B
+- **11.py**: Implement KDD process (selection, preprocessing, transformation).
+- **12.py**: Predict house prices using Simple Linear Regression.
+- **13.py**: Classify students using Gaussian Naive Bayes.
+- **14.py**: Classify loan applications using Decision Tree.
+- **15.py**: Customer segmentation using K-Means clustering.
+- **16.py**: Perform Agglomerative Hierarchical Clustering.
+- **17.py**: Perform Divisive Hierarchical Clustering.
+- **18.py**: Generate frequent itemsets using Apriori algorithm.
+- **19.py**: Demonstrate Data Parallelism.
+- **20.py**: Compare Sequential vs Parallel Processing execution time.
+
+
